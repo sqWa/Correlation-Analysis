@@ -27,7 +27,7 @@ class Cal_and_Plot():
 
         self.time_slice = time_slice
 
-    def pcc(self,x, y):  # 皮尔逊相关系数
+    def pcc(self,x, y):  #皮尔逊相关系数
         n = min(len(x), len(y))
         x = np.array(x[: n])
         y = np.array(y[: n])
