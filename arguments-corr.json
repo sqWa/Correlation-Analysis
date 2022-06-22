@@ -5,7 +5,7 @@
     "deviation":0.05,
     "thre_down":0,
     "thre_up":1
-    }
+    } 
     },
     "num":"发/XX",
     "params1":["表号/参数号/参数名"],
