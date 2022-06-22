@@ -8,15 +8,9 @@ import os
 from math import sqrt, nan
 from dataloader import DataLoader
 
-'''
-表名：HistoryData-型号id-测试发次id-测试类型id，行键名：测试阶段id-表号-参数编号_数据源编号，列名为时间戳
-输入：表名 table_name 行名 row_name 需要读取的个数 n
-当n大于表的最大个数时读取停止,如果没有表名 table_name会报错，表名存在没有行名 row_name不报错但不会读出数据
-输出：时间，键值
-使用：data_load("HistoryData-1-1-1","82-1390-6_0", 100)
-'''
 
-def stamp2dt(stamp):         #'2016-11-03 06:47:55.807_1'
+
+def stamp2dt(stamp):        
     date = stamp.split()[0]
     hms = stamp.split()[1]
     return date, hms
@@ -29,7 +23,7 @@ def hms2s(hms):
 
 
 
-class Get_fashetime(): #找发射时间
+class Get_fashetime(): #找零点
     def __init__(self, table_name, row_name): 
         self.table_name = table_name
         self.row_name = row_name
@@ -48,7 +42,7 @@ class Get_fashetime(): #找发射时间
                     break
                 else:
                     a = i+1
-            fashe_time_getted = self.df[a-1,0] +' ' + self.df[a-1,1]   #带日期  #2016-11-03 20:45:39.655_1
+            fashe_time_getted = self.df[a-1,0] +' ' + self.df[a-1,1]   #带日期  
         return fashe_time_getted
     
 
@@ -148,7 +142,7 @@ class Trans_ins(): #指令 → 相对时间
 
 
 
-class Trans_tstamp(): #时间戳 → 相对时间  (原trans_time_stamp())
+class Trans_tstamp(): #时间戳 → 相对时间
     def __init__(self, time_stamp, fashe_time):
         self.time_stamp = time_stamp
         self.fashe_time = fashe_time

@@ -274,7 +274,7 @@ class Trend_model():
 
     def trend_run(self):
         '''斜率相关性总方法'''
-        X_start, X_end, X_t_int, X_v_int = self.remove_both_ends(self.X_t, self.X_v, self.mean_t_step) #掐头去尾 留下1000整数倍  X_t_int的首末即X_start X_end
+        X_start, X_end, X_t_int, X_v_int = self.remove_both_ends(self.X_t, self.X_v, self.mean_t_step) 
 
 
         X_t_mean, X_v_mean = self.mean_nocare_fre(X_t_int, X_v_int, self.mean_t_step)

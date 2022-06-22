@@ -6,11 +6,10 @@ import os
 import json
 
 '''
-表名：HistoryData-型号id-测试发次id-测试类型id，行键名：测试阶段id-表号-参数编号_数据源编号，列名为时间戳
 输入：表名 table_name 行名 row_name 需要读取的个数 n
 当n大于表的最大个数时读取停止,如果没有表名 table_name会报错，表名存在没有行名 row_name不报错但不会读出数据
 输出：时间，键值
-使用：data_load("HistoryData-1-1-1","82-1390-6_0", 100)
+使用：data_load("表名","行名")
 '''
 
 class DataLoader():
@@ -27,9 +26,7 @@ class DataLoader():
         except:
             print('数据库连接出错')
         table = hb.Table(table_name,connection)
-        #data = table.row(row_name)
         rowfilter="RowFilter(=,'regexstring:"+row_name+"*')"
-        #必须使用for循环来读到过滤之后的k v，k即匹配得到的行名，data = v，即为data.keys()，data.values()
         data = None
         for k,v in table.scan(filter=rowfilter): 
             data = v
@@ -54,15 +51,11 @@ class DataLoader():
         x = []
         y = []
         rowfilter="RowFilter(=,'regexstring:"+row_name+"*')"
-        #必须使用for循环来读到过滤之后的k v，k即匹配得到的行名，data = v，即为data.keys()，data.values()
         for k,v in table.scan(filter=rowfilter): 
             print(k)  
             break
-        #删除数据
-        #table.delete(b'82-1306-3_0', columns=[b'time:1-03 08:08:48.969_1\x110.192'])
-        #table.delete(b'82-1306-5_0', columns=[b'time:1-03 08:08:48.969_1\x110.194'])
         for key in keys:
-            t = str(key)[7:][:-1] #这里解析出时间可以使用其他方法
+            t = str(key)[7:][:-1] 
             value = float(table.cells(row_name, key)[0])
             count += 1
             print(key, value)
@@ -72,8 +65,4 @@ class DataLoader():
                 break
         return np.array(x), np.array(y)
 
-if __name__=='__main__':
-    dt=DataLoader()
-    #dt.data_load("HistoryData-1-1-1","82-1390-6_0")
-    dt.data_load2("HistoryData-1-1-1","82-1306-3_0",5)
 

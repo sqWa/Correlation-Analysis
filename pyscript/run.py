@@ -30,7 +30,7 @@ def save_result(save_path, json_key, info):
             with open(save_path + 'result.json', 'w', encoding='utf-8') as f:
                 f.write(json.dumps(results_dic, indent=2, ensure_ascii=False))
         else:
-            if info not in results_dic[json_key]:  #避免相同内容重复保存  新list内容
+            if info not in results_dic[json_key]:  #避免相同内容重复保存 
                 results_dic[json_key].append(info)
                 with open(save_path + 'result.json', 'w', encoding='utf-8') as f:
                     f.write(json.dumps(results_dic, indent=2, ensure_ascii=False))
@@ -38,7 +38,7 @@ def save_result(save_path, json_key, info):
 ## 保存简化的历史总览结果
 def save_simple_result(save_path_simple, json_key, info):
     type_name = {'3':'切片相关性','4':'斜率相关性', '5':'时差相关性', '6':'整体相关性'}
-    info_simple = dict([(key,info[key]) for key in ["型号","发次","测试类型","测试阶段","参数1","参数2"]])
+    info_simple = dict([(key,info[key]) for key in ["型号","发","类","段","参数1","参数2"]])
     result = info["结果"]
     if info["相关性类型序号"] == '3': 
         if result != '无显著切片相关性':
@@ -74,8 +74,8 @@ def save_simple_result(save_path_simple, json_key, info):
             else:
                 for i,simple_dic in enumerate(results_dict[json_key]):
                     modifi = False
-                    if dict([(key,info_simple[key]) for key in ["型号","发次","测试类型","测试阶段","参数1","参数2"]]) \
-                        == dict([(key,simple_dic[key]) for key in ["型号","发次","测试类型","测试阶段","参数1","参数2"]]):
+                    if dict([(key,info_simple[key]) for key in ["型号","发","类","段","参数1","参数2"]]) \
+                        == dict([(key,simple_dic[key]) for key in ["型号","发","类","段","参数1","参数2"]]):
                         results_dict[json_key][i]['结果汇总'][type_name[info["相关性类型序号"]]] = res   #over
                         modifi = True
                 if modifi == False:
@@ -138,7 +138,7 @@ def trans_timecut(table_name, argteststage, ordertime_list, fashe_time):
                 print(traceback.format_exc())
                 tv = np.array([])
             if tv.size == 0:
-                AlgoConfig.task_message("该发次所选指令 "+ ins_name+" 无数据，无法计算相关性\n")
+                AlgoConfig.task_message("该发所选指令 "+ ins_name+" 无数据，无法计算相关性\n")
                 return None, None, None
             else:
                 t = float(tv[0,0])  #指令取第一个时间
@@ -176,7 +176,7 @@ def load_and_cut_data(table_name, parm_list, fashe_time, left_s, right_s,test_st
                 print(traceback.format_exc())
                 TV_ = np.array([])
             if TV_.size == 0:
-                AlgoConfig.task_message("该发次所选参数 "+para+" 无数据，无法进行计算\n")
+                AlgoConfig.task_message("该发所选参数 "+para+" 无数据，无法进行计算\n")
                 continue
 
             #### 截取时间区间内数据
@@ -190,7 +190,7 @@ def load_and_cut_data(table_name, parm_list, fashe_time, left_s, right_s,test_st
                     continue
             else:
                 _TV  = TV_
-            data_load[para] = _TV #空数据未存key
+            data_load[para] = _TV 
             AlgoConfig.task_message(para + " 数据载入完成\n")
 
     return data_load
@@ -204,16 +204,16 @@ def run_corr(arg):
     save_path_simple = '../history/Type_7/' 
     creat_dirs([save_path, save_path+'img/', save_path_simple, save_path_simple+'img/'])
     
-    ## 在此修改用于查找发射时间的参数/指令
-    referenced_para_row = arg['test-stage'].split('/')[0] + '-1306-1_0'  #用1390表的参数6的最后时间点作为发射时间
+    ## 在此修改零点的参数/指令
+    referenced_para_row = arg['test-stage'].split('/')[0] + '-13-1_0'  
     try:
-        fashe_time = Get_fashetime(table_name, referenced_para_row).run() #2016-11-03 20:45:39.655_1
+        fashe_time = Get_fashetime(table_name, referenced_para_row).run()
     except Exception as ex:
         print(traceback.format_exc())
 
     ## 时间区间设置解读
-    orders_list = [[arg["order-param1"]] + [arg["order-param2"]]]    #根据时间顺序排序    #before根据编号的排序方式 orders_list = [sorted(orders_list[0])] if orders_list[0][0]!=None and orders_list[0][1]!=None else orders_list #均非空时排序
-    time_list = [ [arg["start-time"]] + [arg["end-time"]] ]    # time_list = [sorted(time_list[0])] if time_list[0][0]!=None and time_list[0][1]!=None else time_list
+    orders_list = [[arg["order-param1"]] + [arg["order-param2"]]]    
+    time_list = [ [arg["start-time"]] + [arg["end-time"]] ]  
     ordertime_list = np.append(orders_list, time_list, axis=0) #[[指令1,指令2],[时间1,时间2]]
     none_count = np.sum(ordertime_list == None)
     if none_count == 2:
@@ -252,9 +252,9 @@ def run_corr(arg):
 
                 info = {}
                 info["型号"] = arg["roc"]
-                info["发次"] = arg["num"]
-                info["测试类型"] = arg["test-ype"]
-                info["测试阶段"] = arg["test-stage"]
+                info["发"] = arg["num"]
+                info["类"] = arg["test-ype"]
+                info["段"] = arg["test-stage"]
                 info["参数1"] = para1
                 info["参数2"] = para2
 
@@ -348,7 +348,6 @@ def run_corr(arg):
                     info["判据"] = '--'
 
                 elif str(arg["type"]) == '5':  #时差相关性
-                    ####在此修改时差：修改下一行中diff值，单位秒
                     str_info = Causality_info(table_name, para1, para2, TV1, TV2, save_path, info, info_threshold=0.01, diff=50, n=10).causality_run()  #, frequency
                     info["判据"] = '--'
 

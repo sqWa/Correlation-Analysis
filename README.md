@@ -24,17 +24,13 @@ python run.py
 
 
 # Data
-The data should be loaded from Hbase type Database, and details can be changed in `/pyscript/dataloader.y`. 
-
-JSONAddr and JSONPort indicate the address and port for obtaining parameters, and contextPath indicates the address prefixfor obtaining parameters. 
-
-HBaseAddr, HBasePort indicates the address and port of HBase.
+The data should be loaded from Hbase type Database, and details can be changed in `/web/setting/setting.txt`. HBaseAddr, HBasePort indicates the address and port of HBase. 
 
 # Results
-The calculation results will be saved into `/history` automatically in a canonical readable manner.
+The calculation results will be saved into `/history`/ automatically in a canonical readable manner. Under every type, it will include `result.json` and related images in `/img/`.
 
 # Web
 
-Embedding the above code into the front-end web framework can start the web service. This is a screenshot of the web service we have implemented locally. The parameters have been blurred.
+Embedding the above code into the front-end web framework can start a web service. This is a screenshot of the web service we have implemented locally. The parameters have been blurred.
 
 ![image-20220622151447458](README.assets/image-20220622151447458.png)

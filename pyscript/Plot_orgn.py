@@ -8,7 +8,7 @@ plt.switch_backend('agg')
 
 class Plot_orgn():
     def __init__(self, table_name, para1, para2, TV1, TV2,
-             save_path, save_info, start_time=None, end_time=None): #left right 放大的左右界限
+             save_path, save_info, start_time=None, end_time=None): 
         self.table_name = table_name
         self.para1 = para1
         self.para2 = para2
@@ -97,7 +97,7 @@ class Plot_orgn():
 
         fig_name2 = ''
         for key,value in self.save_info.items():
-            if key in ["型号","发次","测试类型","测试阶段","参数1","参数2"]: 
+            if key in ["型号","发","型","段","参数1","参数2"]: 
                 fig_name2 +=  value + ';'  #名字太长 中文；改成英文;
         fig_name2 += '--;--;--;--;'
         ##名字中带有/会在路径中分级 半角转全角会避免此问题
@@ -105,7 +105,7 @@ class Plot_orgn():
         fig_name2 = fig_name2.replace(':','：')
 
     
-        ####### pr修改
+        ####### 图数保存
         plot_X = np.append(plot_X_t.reshape(-1,1), plot_X_v.reshape(-1,1), axis=1)
         plot_Y = np.append(plot_Y_t.reshape(-1,1), plot_Y_v.reshape(-1,1), axis=1)
         fig_name2 = self.save_path + '../Type_7/img/' + fig_name2 + '.json'

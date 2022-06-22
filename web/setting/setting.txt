@@ -1,0 +1,8 @@
+{
+    "JSONAddr":"127.0.0.1",
+    "JSONPort":"8000",    
+    "contextPath":"HealthMonitor",
+    "HBaseAddr":"xxx",
+    "HBasePort":"xxx",
+    "ImgVisbleAddr":"xxx"
+}
