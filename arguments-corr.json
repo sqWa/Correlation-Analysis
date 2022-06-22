@@ -1,0 +1,25 @@
+{
+    "information":{
+        "表号/参数号/参数名 & 表号/参数号/参数名":
+    {
+    "deviation":0.05,
+    "thre_down":0,
+    "thre_up":1
+    }
+    },
+    "num":"发/XX",
+    "params1":["表号/参数号/参数名"],
+    "params2":["表号/参数号/参数名","表号/参数号/参数名","表号/参数号/参数名"],
+    "roc":"型号/XX",
+    "slide-step":null,
+
+    "start-time":"2016-11-03 06:40:55.807",
+    "end-time":"2016-11-03 18:45:39.655",
+    "order-param1":null, 
+    "order-param2":null,
+
+    "test-stage":"段/XX",
+    "test-ype":"类/XX",
+
+    "type":"3"
+    }
