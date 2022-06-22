@@ -3,9 +3,13 @@ This repository is used to analyze different types of correlations between param
 
 # Functions
 (1) Overall correlation calculation.
+
 (2) Calculation of deviation from historical data and criterion discrimination.
+
 (3) Time slices correlation calculation and Matrix diagonal highlight information extraction.
+
 (4) Extract the slope consistency interval and record the degree.
+
 (5) Time difference correlation calculation and causal information extraction.
 
 # Instructions
@@ -14,6 +18,7 @@ Change the calculation type and parameters information in the `argument-corr.jso
 
 ```python
 cd ./pyscript
+
 python run.py
 ```
 
